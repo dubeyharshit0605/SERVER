@@ -1,0 +1,429 @@
+{
+  "info": {
+    "name": "Mangrove Tracker API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nickname\": \"user1\",\n    \"communityId\": \"community1\",\n    \"password\": \"password123\",\n    \"role\": \"member\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nickname\": \"user1\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nickname\": \"updatedUser1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trees",
+      "item": [
+        {
+          "name": "Create Tree",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [73.123, 19.456]\n    },\n    \"species\": \"Rhizophora mucronata\",\n    \"plantedDate\": \"2023-08-15\",\n    \"healthStatus\": \"healthy\",\n    \"images\": [\"https://example.com/image1.jpg\"],\n    \"notes\": \"Planted near the coastal area\",\n    \"localId\": \"local-123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees"]
+            }
+          }
+        },
+        {
+          "name": "Get Trees",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/trees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees"]
+            }
+          }
+        },
+        {
+          "name": "Get Tree by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/trees/{{treeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees", "{{treeId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Tree",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"healthStatus\": \"needs-attention\",\n    \"notes\": \"Tree needs watering\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trees/{{treeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees", "{{treeId}}"]
+            }
+          }
+        },
+        {
+          "name": "Add Maintenance Record",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"date\": \"2023-08-20\",\n    \"activity\": \"Watering\",\n    \"notes\": \"Regular maintenance\",\n    \"healthStatus\": \"healthy\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trees/{{treeId}}/maintenance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees", "{{treeId}}", "maintenance"]
+            }
+          }
+        },
+        {
+          "name": "Verify Tree (Leader)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{leaderToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"verificationStatus\": \"verified\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trees/{{treeId}}/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees", "{{treeId}}", "verify"]
+            }
+          }
+        },
+        {
+          "name": "Delete Tree",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/trees/{{treeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trees", "{{treeId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rewards",
+      "item": [
+        {
+          "name": "Get User Rewards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/rewards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rewards"]
+            }
+          }
+        },
+        {
+          "name": "Get Community Rewards (Leader)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{leaderToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/rewards/community",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rewards", "community"]
+            }
+          }
+        },
+        {
+          "name": "Award Points (Leader)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{leaderToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": \"{{userId}}\",\n    \"points\": 20,\n    \"reason\": \"community-activity\",\n    \"description\": \"Participated in community cleanup\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rewards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rewards"]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/rewards/leaderboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rewards", "leaderboard"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sync",
+      "item": [
+        {
+          "name": "Sync Trees",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"trees\": [\n        {\n            \"localId\": \"local-123\",\n            \"location\": {\n                \"type\": \"Point\",\n                \"coordinates\": [73.123, 19.456]\n            },\n            \"species\": \"Rhizophora mucronata\",\n            \"plantedDate\": \"2023-08-15\",\n            \"healthStatus\": \"healthy\",\n            \"images\": [\"https://example.com/image1.jpg\"],\n            \"notes\": \"Planted near the coastal area\"\n        },\n        {\n            \"localId\": \"local-124\",\n            \"location\": {\n                \"type\": \"Point\",\n                \"coordinates\": [73.124, 19.457]\n            },\n            \"species\": \"Avicennia marina\",\n            \"plantedDate\": \"2023-08-16\",\n            \"healthStatus\": \"healthy\",\n            \"images\": [\"https://example.com/image2.jpg\"],\n            \"notes\": \"Planted in muddy area\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sync/trees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sync", "trees"]
+            }
+          }
+        },
+        {
+          "name": "Sync Maintenance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"maintenanceRecords\": [\n        {\n            \"treeId\": \"{{treeId}}\",\n            \"date\": \"2023-08-20\",\n            \"activity\": \"Watering\",\n            \"notes\": \"Regular maintenance\",\n            \"healthStatus\": \"healthy\"\n        },\n        {\n            \"localTreeId\": \"local-123\",\n            \"date\": \"2023-08-21\",\n            \"activity\": \"Pruning\",\n            \"notes\": \"Removed dead branches\",\n            \"healthStatus\": \"healthy\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sync/maintenance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sync", "maintenance"]
+            }
+          }
+        },
+        {
+          "name": "Get Offline Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sync/data",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sync", "data"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here"
+    },
+    {
+      "key": "leaderToken",
+      "value": "your_leader_jwt_token_here"
+    },
+    {
+      "key": "treeId",
+      "value": "tree_id_here"
+    },
+    {
+      "key": "userId",
+      "value": "user_id_here"
+    }
+  ]
+}
+
