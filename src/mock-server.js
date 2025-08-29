@@ -334,6 +334,18 @@ app.post('/api/trees', mockProtect, (req, res) => {
       });
     }
     
+    // Validate location coordinates
+    if (!location.coordinates || 
+        !Array.isArray(location.coordinates) || 
+        location.coordinates.length !== 2 ||
+        typeof location.coordinates[0] !== 'number' || 
+        typeof location.coordinates[1] !== 'number') {
+      return res.status(400).json({
+        success: false,
+        message: 'Location coordinates must be an array of two numbers [longitude, latitude]'
+      });
+    }
+    
     // Create new tree
     const newTree = {
       _id: `mock-tree-${Date.now()}`,
@@ -568,4 +580,3 @@ const server = app.listen(PORT, () => {
 
 // Export for testing
 module.exports = { app, server, mockDB };
-

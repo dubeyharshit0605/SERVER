@@ -18,6 +18,26 @@ const createTree = async (req, res) => {
       notes,
       localId
     } = req.body;
+    
+    // Validate required fields
+    if (!location || !species || !plantedDate) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide location, species, and plantedDate'
+      });
+    }
+    
+    // Validate location coordinates
+    if (!location.coordinates || 
+        !Array.isArray(location.coordinates) || 
+        location.coordinates.length !== 2 ||
+        typeof location.coordinates[0] !== 'number' || 
+        typeof location.coordinates[1] !== 'number') {
+      return res.status(400).json({
+        success: false,
+        message: 'Location coordinates must be an array of two numbers [longitude, latitude]'
+      });
+    }
 
     const tree = await Tree.create({
       userId: req.user._id,
@@ -423,4 +443,3 @@ module.exports = {
   verifyTree,
   deleteTree
 };
-
